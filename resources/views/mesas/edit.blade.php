@@ -4,7 +4,7 @@
 
     {!! Form::model($mesa,['method' => 'PATCH','files'=>true,'route'=>['mesas.update',$mesa->id]]) !!}
             <div class="text-center">
-                <h5><i class="fa fa-pencil"></i> Actualizacao de Mesa:</h5>
+                <h5><i class="fa fa-pencil"></i> Actualização da Mesa:</h5>
                 <hr class="mt-2 mb-2">
             </div>
 
@@ -13,7 +13,7 @@
             </div>
 
             <div class="md-form col-md-5 col-md-offset-1">
-                {!! Form::select('tipo_id', 'tipos', null, ['class'=>'mdb-select']) !!}
+                {!! Form::select('tipo_id', $tipos, null, ['class'=>'mdb-select', 'placeholder'=>'Selecione o tipo']) !!}
             </div>
 
             <div class="md-form col-md-5 col-md-offset-1">

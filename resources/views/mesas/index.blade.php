@@ -18,13 +18,13 @@
         <table id="tabela" class="table product-table">
             <thead>
                 <tr>
-                    <th class="text-center"></th>
+                    <th class="text-center">Imagem</th>
                     <th class="text-center">Nome</th>
                     <th class="text-center">Tipo</th>
                     <th class="text-center">Medida</th>
                     <th class="text-center">Quatidade</th>
                     <th class="text-center">Preco</th>
-                    <th class="text-center"></th>
+                    <th class="text-center">Acções</th>
                 </tr>
             </thead>
 
@@ -32,20 +32,20 @@
             <tbody>
             @foreach ($mesas as $mesa)
                 <tr>
-                    <td>{{ $mesa->foto}}</td>
+                    <td><img src="/f_mesas/{{$mesa->foto}}"></td>
                     <td>{{ $mesa->nome }}</td>
                     <td>{{ $mesa->tipo->designacao}}</td>
                     <td>{{ $mesa->medida }}</td>
                     <td>{{ $mesa->quantidade }}</td>
                     <td>{{ $mesa->preco }}</td>
-                    {{--<td><a href="{{route('mesas.edit',$mesa->id)}}" class="btn btn-warning btn-sm">Alterar</a></td>--}}
+                    <td><a href="{{route('mesas.edit',$mesa->id)}}" class="btn btn-warning btn-md">Alterar</a></td>
                     {{--<td><a href="{{route('mesas.destroy',$mesa->id)}}" class="btn btn-danger btn-sm">Apagar</a></td>--}}
 
-                    <td>
-                        {!! Form::open(['method' => 'EDIT', 'route'=>['mesas.edit', $mesa->id]]) !!}
-                        {!! Form::submit('Alterar', ['class' => 'btn btn-warning btn-sm']) !!}
-                        {!! Form::close() !!}
-                    </td>
+                    {{--<td>--}}
+                        {{--{!! Form::open(['method' => 'EDIT', 'route'=>['mesas.edit', $mesa->id]]) !!}--}}
+                        {{--{!! Form::submit('Alterar', ['class' => 'btn btn-warning btn-sm']) !!}--}}
+                        {{--{!! Form::close() !!}--}}
+                    {{--</td>--}}
 
                     <td>
                         {!! Form::open(['method' => 'DELETE', 'route'=>['mesas.destroy', $mesa->id]]) !!}

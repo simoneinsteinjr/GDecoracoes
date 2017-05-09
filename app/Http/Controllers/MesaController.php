@@ -47,8 +47,9 @@ class MesaController extends Controller
 
     public function edit($id)
     {
+        $tipos=Tipo::pluck('designacao','id');
         $mesa=Mesa::find($id);
-        return view('mesas.edit',compact('mesa'));
+        return view('mesas.edit',compact('mesa','tipos'));
     }
 
     public function update(MesaRequest $rq, $id)
