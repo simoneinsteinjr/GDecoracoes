@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="text-center">
-        <h5><i class="fa fa-"></i> Lista de Mesas:</h5>
+        <h5><i class="fa fa-"></i> Lista de Tipos:</h5>
         <hr class="mt-2 mb-2">
     </div>
 
@@ -18,27 +18,19 @@
         <table id="tabela" class="table product-table">
             <thead>
                 <tr>
-                    <th class="text-center">Imagem</th>
-                    <th class="text-center">Nome</th>
-                    <th class="text-center">Tipo</th>
-                    <th class="text-center">Medida</th>
-                    <th class="text-center">Quatidade</th>
-                    <th class="text-center">Preco</th>
+                    <th class="text-center">Designacao</th>
+                    <th class="text-center">Descricao</th>
                     <th class="text-center">Acções</th>
                 </tr>
             </thead>
 
 
             <tbody>
-            @foreach ($mesas as $mesa)
+            @foreach ($tipo as $t)
                 <tr>
-                    <td><img src="/f_mesas/{{$mesa->foto}}"></td>
-                    <td>{{ $mesa->nome }}</td>
-                    <td>{{ $mesa->tipo->designacao}}</td>
-                    <td>{{ $mesa->medida }}</td>
-                    <td>{{ $mesa->quantidade }}</td>
-                    <td>{{ $mesa->preco }}</td>
-                    <td><a href="{{route('mesas.edit',$mesa->id)}}" class="btn btn-warning btn-md">Alterar</a></td>
+                    <td>{{ $t->designacao }} </td>
+                    <td>{{ $t->descricao }}  </td>
+                    <td><a href="{{route('tipos.edit',$t->id)}}" class="btn btn-warning btn-md">Alterar</a></td>
                     {{--<td><a href="{{route('mesas.destroy',$mesa->id)}}" class="btn btn-danger btn-sm">Apagar</a></td>--}}
 
                     {{--<td>--}}
@@ -48,7 +40,7 @@
                     {{--</td>--}}
 
                     <td>
-                        {!! Form::open(['method' => 'DELETE', 'route'=>['mesas.destroy', $mesa->id]]) !!}
+                        {!! Form::open(['method' => 'DELETE', 'route'=>['tipos.destroy', $t->id]]) !!}
                         {!! Form::submit('Apagar', ['class' => 'btn btn-danger btn-sm']) !!}
                         {!! Form::close() !!}
                     </td>

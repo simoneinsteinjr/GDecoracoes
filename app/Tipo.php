@@ -11,12 +11,8 @@ class Tipo extends Model
         'descricao'
     ];
 
-    public function Cadeira(){
-        return $this->hasMany('App\Cadeira');
-    }
-
     public function Mesa(){
-        return $this->hasMany('App\Mesa');
+        return $this->hasMany('App\Material');
     }
 
     protected $table = 'tipos';

@@ -51,20 +51,16 @@
                 <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-pencil"></i>Adicionar<i class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="mesa" class="waves-effect">Mesa</a></li>
-                            <li><a href="cadeira" class="waves-effect">Cadeira</a></li>
-                            <li><a href="copo" class="waves-effect">Copo</a></li>
-                            <li><a href="talhere" class="waves-effect">Talhere</a></li>
+                            <li><a href="material" class="waves-effect">Material</a></li>
+                            <li><a href="#" class="waves-effect">Tipo</a></li>
                         </ul>
                     </div>
                 </li>
                 <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-table"></i>Tabelas<i class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="mesaLista" class="waves-effect">Mesa</a></li>
-                            <li><a href="cadeiraLista" class="waves-effect">Cadeira</a></li>
-                            <li><a href="copoLista" class="waves-effect">Copo</a></li>
-                            <li><a href="talhereLista" class="waves-effect">Talhere</a></li>
+                            <li><a href="materiais" class="waves-effect">Material</a></li>
+                            <li><a href="tipos" class="waves-effect">Tipos</a></li>
                         </ul>
                     </div>
                 </li>

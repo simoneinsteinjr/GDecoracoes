@@ -19,10 +19,10 @@ Route::get('admin', function () {
     return view('admin');
 });
 
-Route::get('admin', function () {
-    return view('admin');
-});
 
-Route::get('mesa', 'MesaController@create');
-Route::resource('mesas', 'MesaController');
-Route::get('mesaLista', 'MesaController@index');
+Route::get('material', 'MaterialController@create');
+Route::resource('materiais', 'MaterialController');
+
+Route::get('tipo', 'TipoController@create');
+Route::resource('tipos', 'TipoController');
+
