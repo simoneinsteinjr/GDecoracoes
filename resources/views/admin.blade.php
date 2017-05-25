@@ -52,7 +52,7 @@
                     <div class="collapsible-body">
                         <ul>
                             <li><a href="material" class="waves-effect">Material</a></li>
-                            <li><a href="#" class="waves-effect">Tipo</a></li>
+                            <li><a href="tipo" class="waves-effect">Tipo</a></li>
                         </ul>
                     </div>
                 </li>

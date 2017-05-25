@@ -25,8 +25,14 @@
         {!! Form::number('preco',null,['placeholder'=>'Introduza o preco por unidade']) !!}
     </div>
 
-    <div class="md-form col-md-3 col-md-offset-9">
-            {!! Form::file('foto',null) !!}
+    <div class="file-field col-lg-5">
+        <div class="btn btn-primary btn-sm">
+            <span>Escolha a foto</span>
+            <input type="file" name="foto">
+        </div>
+        <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Busque o ficheiro">
+        </div>
     </div>
 
     <div class="md-form col-md-5 col-md-offset-1">

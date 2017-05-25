@@ -18,8 +18,8 @@
         <table id="tabela" class="table product-table">
             <thead>
                 <tr>
-                    <th class="text-center">Designacao</th>
-                    <th class="text-center">Descricao</th>
+                    <th class="text-center">Designação</th>
+                    <th class="text-center">Descrição</th>
                     <th class="text-center">Acções</th>
                 </tr>
             </thead>
@@ -28,16 +28,9 @@
             <tbody>
             @foreach ($tipo as $t)
                 <tr>
-                    <td>{{ $t->designacao }} </td>
-                    <td>{{ $t->descricao }}  </td>
+                    <td>{{ $t->designacao}}</td>
+                    <td>{{ $t->descricao }}</td>
                     <td><a href="{{route('tipos.edit',$t->id)}}" class="btn btn-warning btn-md">Alterar</a></td>
-                    {{--<td><a href="{{route('mesas.destroy',$mesa->id)}}" class="btn btn-danger btn-sm">Apagar</a></td>--}}
-
-                    {{--<td>--}}
-                        {{--{!! Form::open(['method' => 'EDIT', 'route'=>['mesas.edit', $mesa->id]]) !!}--}}
-                        {{--{!! Form::submit('Alterar', ['class' => 'btn btn-warning btn-sm']) !!}--}}
-                        {{--{!! Form::close() !!}--}}
-                    {{--</td>--}}
 
                     <td>
                         {!! Form::open(['method' => 'DELETE', 'route'=>['tipos.destroy', $t->id]]) !!}
