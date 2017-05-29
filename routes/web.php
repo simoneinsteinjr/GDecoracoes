@@ -19,6 +19,10 @@ Route::get('admin', function () {
     return view('admin');
 });
 
+Route::get('index', function () {
+    return view('index');
+});
+
 
 Route::get('material', 'MaterialController@create');
 Route::resource('materiais', 'MaterialController');
