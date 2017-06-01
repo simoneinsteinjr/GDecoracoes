@@ -11,18 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('admin', function () {
     return view('admin');
 });
 
-Route::get('index', function () {
-    return view('index');
-});
 
+Route::get('/', 'FrontController@index');
+
+Route::get('adicionar-ao-carinho/{id}', 'FrontController@adicionarAoCarinho');
+
+Route::get('reservar', 'ReservaController@store');
 
 Route::get('material', 'MaterialController@create');
 Route::resource('materiais', 'MaterialController');
@@ -30,3 +32,7 @@ Route::resource('materiais', 'MaterialController');
 Route::get('tipo', 'TipoController@create');
 Route::resource('tipos', 'TipoController');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

@@ -28,7 +28,7 @@
 	<!-- /Twitter Card -->
 
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="../../../../../maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
 	<!-- Bootstrap core CSS -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -49,40 +49,62 @@
 
 		<!-- SideNav slide-out button -->
 		<div class="float-left">
-			<a href="#" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
+			<a href="/" data-activates="slide-out" class="button-collapse"><i class="fa fa-bars"></i></a>
 		</div>
 
 		<!-- Breadcrumb-->
 		<div class="breadcrumb-dn mr-auto">
 			<ol class="breadcrumb header-breadcrumb">
-				<li class="breadcrumb-item"><a href="#">Home</a></li>
-				<li class="breadcrumb-item"><a href="#">Blog</a></li>
-				<li class="breadcrumb-item active">Blog Post</li>
+				<li class="breadcrumb-item"><a href="/">Home</a></li>
+				<li class="breadcrumb-item"><a href="#">Quem Somos</a></li>
+				<li class="breadcrumb-item"><a href="#">Serviços</a></li>
 			</ol>
 		</div>
 
 		<ul class="nav navbar-nav nav-flex-icons ml-auto">
 
 			<li class="nav-item ">
-				<a class="nav-link" href="#" data-toggle="modal" data-target="#cart-modal-ex"><span class="badge red">4</span> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="hidden-sm-down">Cart</span></a>
+				<a class="nav-link" href="" data-toggle="modal"  data-target="#cart-modal-ex"><span class="badge red">{{ Session::has('carinho') ? Session::get('carinho')->quantidadeTotal : '' }}</span> <i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="hidden-sm-down">Carinho de Compras</span></a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link"><i class="fa fa-envelope"></i> <span class="hidden-sm-down">Contacto</span></a>
 			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Account</a>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-					<a class="dropdown-item" href="#">Action</a>
-					<a class="dropdown-item" href="#">Another action</a>
-					<a class="dropdown-item" href="#">Something else here</a>
-				</div>
-			</li>
+
+			@if (Auth::guest())
+				<li class="nav-item">
+					<a href="{{ url('/login') }}" class="nav-link"><span class="hidden-sm-down">Login</span></a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ url('/register') }}" class="nav-link"><i class="fa fa-login"></i> <span class="hidden-sm-down">Criar Conta</span></a>
+				</li>
+			@else
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						{{ Auth::user()->name }} <span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu" role="menu">
+						<li>
+							<a href="{{ url('/logout') }}"
+							   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+								Logout
+							</a>
+
+							<form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+								{{ csrf_field() }}
+							</form>
+						</li>
+					</ul>
+				</li>
+			@endif
 		</ul>
 
 	</nav>
 	<!-- /.Navbar -->
 
 </header>
+
 <!-- /.Double navigation -->
 
 <!--Main layout-->
@@ -205,13 +227,17 @@
 			<h2 class="h2-responsive">Faça já a Reserva do Seu Material</h2>
 		</div>
 
+
+
 		<!-- Section: Products v.1 -->
 		<section class="section">
 			<!-- First row -->
 			<div class="row">
 
+			@foreach ($material as $m)
 				<!-- First column -->
 				<div class="col-lg-4 col-md-12 mb-r">
+
 
 					<!-- Card -->
 					<div class="card text-center card-cascade narrower">
@@ -219,7 +245,7 @@
 
 						<!-- Card image -->
 						<div class="view overlay hm-white-slight">
-							<img src="/img/Photos/Horizontal/E-commerce/Products/img%20(1).jpg" class="img-fluid" alt="">
+							<img src="/img/{{$m->foto}}" class="img-fluid" alt="" width="300px" height="100px">
 							<a>
 								<div class="mask waves-light"></div>
 							</a>
@@ -230,8 +256,8 @@
 						<div class="card-block">
 
 							<!-- Category & Title -->
-							<h5>Jeans</h5>
-							<h4 class="card-title"><strong><a href="#">Blue jeans</a></strong></h4>
+							<h4><strong>{{$m->tipo->designacao}}</strong></h4>
+							<h5 class="card-title"><a href="#">{{$m->descricao}}</a></h5>
 
 							<!-- Rating -->
 							<ul class="rating">
@@ -242,18 +268,19 @@
 								<li><i class="fa fa-star-o"></i></li>
 							</ul>
 
-							<!-- Description -->
-							<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe voluptates.
-							</p>
+							{{--<!-- Description -->--}}
+							{{--<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe voluptates.--}}
+							{{--</p>--}}
 
 							<!-- Card footer -->
 							<div class="card-footer">
-								<span class="left">49$</span>
+								<span class="left"><strong>{{$m->preco}} MT</strong></span>
 								<span class="right">
-                                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
+
+                                        <a href="adicionar-ao-carinho/{{$m->id}}" data-toggle="tooltip" data-placement="top" title="Adicionar ao Carinho"><i class="fa fa-shopping-cart"></i></a>
                                         <a data-toggle="tooltip" data-placement="top" title="Share"><i class="fa fa-share-alt"></i></a>
                                         <a class="active" data-toggle="tooltip" data-placement="top" title="Added to Wishlist"><i class="fa fa-heart"></i></a>
-                                    </span>
+								</span>
 							</div>
 
 						</div>
@@ -265,525 +292,12 @@
 				</div>
 				<!-- /.First column -->
 
-				<!-- Second column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card text-center card-cascade narrower">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(2).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block">
-
-							<!-- Category & Title -->
-							<h5>Sweaters</h5>
-							<h4 class="card-title"><strong><a href="#">Grey Sweater</a></strong></h4>
-
-							<!-- Rating -->
-							<ul class="rating">
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-							</ul>
-
-							<!-- Description -->
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam incidunt eius est voluptatibus.
-							</p>
-
-							<!--Card footer-->
-							<div class="card-footer">
-								<span class="left">89$</span>
-								<span class="right">
-                                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Share"><i class="fa fa-share-alt"></i></a>
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    </span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /Second column -->
-
-				<!-- Third column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card text-center card-cascade narrower">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(3).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block">
-
-							<!-- Category & Title -->
-							<h5>Handbags</h5>
-							<h4 class="card-title"><strong><a href="#">Brown Handbag</a></strong></h4>
-
-							<!-- Rating -->
-							<ul class="rating">
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star"></i></li>
-								<li><i class="fa fa-star-half-o"></i></li>
-							</ul>
-
-							<!-- Description -->
-							<p class="card-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur adipisci sed velit.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">59$</span>
-								<span class="right">
-                                        <a data-toggle="tooltip" data-placement="top" title="Add to Cart"><i class="fa fa-shopping-cart"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Share"><i class="fa fa-share-alt"></i></a>
-                                        <a data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    </span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.Third column -->
+			@endforeach
 
 			</div>
 			<!-- /First row -->
 
 		</section>
-		<!-- /.Section: Products v.1 -->
-
-		<hr class="between-sections">
-
-		<!-- Section: Products v.2 -->
-		<section class="section">
-
-			<!-- Section heading -->
-			<h1 class="section-heading">Our bestsellers v.2</h1>
-
-			<!-- Section sescription -->
-			<p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam. Quia, minima?</p>
-
-			<!-- First row -->
-			<div class="row">
-
-				<!-- First column -->
-				<div class="col-lg-4 col-md-12 mb-r">
-
-					<!-- Card -->
-					<div class="card card-cascade narrower">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(38).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-
-							<!-- Category & Title -->
-							<h5>Handbags</h5>
-							<h4 class="card-title"><strong><a href="#">Leather Handbag</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing minima veniam elit. Nam incidunt eius est voluptatibus.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">39$</span>
-								<span class="right">
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    </span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.First column -->
-
-				<!-- Second column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card card-cascade narrower">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(4).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-
-							<!-- Category & Title -->
-							<h5>Packages</h5>
-							<h4 class="card-title"><strong><a href="#">Summer Pack</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">49$</span>
-								<span class="right">
-                                <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
-                                <a class="active" data-toggle="tooltip" data-placement="top" title="Added to Wishlist"><i class="fa fa-heart"></i></a>
-                                </span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.Second column -->
-
-				<!-- Third column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card card-cascade narrower">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(40).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-
-							<!-- Category & Title -->
-							<h5>Backpacks</h5>
-							<h4 class="card-title"><strong><a href="#">Pink Backpack</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">69$</span>
-								<span class="right">
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
-                                        <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
-                                    </span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.Third column -->
-
-			</div>
-			<!-- /.First row -->
-
-		</section>
-		<!-- /.Section: Products v.2 -->
-
-		<hr class="between-sections">
-
-		<!-- Section: Products v.3 -->
-		<section class="section">
-
-			<!-- Section heading -->
-			<h1 class="section-heading">Our bestsellers v.3</h1>
-
-			<!-- Section sescription -->
-			<p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam. Quia, minima?</p>
-
-			<!-- First row -->
-			<div class="row">
-
-				<!-- First column -->
-				<div class="col-lg-4 col-md-12 mb-r">
-
-					<!-- Card -->
-					<div class="card">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight z-depth-1">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(37).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-
-							<!-- Category & Title -->
-							<h5>Shoes</h5>
-							<h4 class="card-title"><strong><a href="#">Black wedges</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">59$ <span class="discount">199$</span></span>
-								<span class="right"><a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.First column -->
-
-				<!-- Second column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight z-depth-1">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(38).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-
-							<!-- Category & Title -->
-							<h5>Handbags</h5>
-							<h4 class="card-title"><strong><a href="#">Leather bag</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur adipisci sed velit.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">39$ <span class="discount">99$</span></span>
-								<span class="right"><a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /.Second column -->
-
-				<!-- Third column -->
-				<div class="col-lg-4 col-md-6 mb-r">
-
-					<!-- Card -->
-					<div class="card">
-
-						<!-- Card image -->
-						<div class="view overlay hm-white-slight z-depth-1">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(39).jpg" class="img-fluid" alt="">
-							<a>
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-						<!-- /.Card image -->
-
-						<!-- Card content -->
-						<div class="card-block text-center">
-							<!-- Category & Title -->
-							<h5>Packages</h5>
-							<h4 class="card-title"><strong><a href="#">Elegant Pack</a></strong></h4>
-
-							<!-- Description -->
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing minima veniam elit. Nam incidunt eius est voluptatibus.
-							</p>
-
-							<!-- Card footer -->
-							<div class="card-footer">
-								<span class="left">79$ <span class="discount">299$</span></span>
-								<span class="right"><a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a></span>
-							</div>
-
-						</div>
-						<!-- /.Card content -->
-
-					</div>
-					<!-- /.Card -->
-
-				</div>
-				<!-- /Third column -->
-
-			</div>
-			<!-- /First row -->
-
-		</section>
-		<!-- /Section: Products v.3 -->
-
-		<hr class="between-sections">
-
-		<!-- Section: Products v.4 -->
-		<section class="section">
-
-			<!-- Section heading -->
-			<h1 class="section-heading">Our bestsellers v.4</h1>
-
-			<!-- Section sescription -->
-			<p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam. Quia, minima?</p>
-
-			<!-- First row -->
-			<div class="row">
-
-				<!-- First column -->
-				<div class="col-lg-3 col-md-6 col-sm-6 mb-r">
-
-					<!-- Collection card -->
-					<div class="card collection-card z-depth-1-half">
-
-						<!-- Card image -->
-						<div class="view hm-zoom">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Vertical/img%20(23).jpg" class="img-fluid" alt="">
-							<div class="stripe dark">
-								<a>
-									<p>Bags <i class="fa fa-chevron-right"></i></p>
-								</a>
-							</div>
-						</div>
-						<!-- /.Card image -->
-
-					</div>
-					<!-- /.Collection card -->
-
-				</div>
-				<!-- /.First column -->
-
-				<!-- Second column -->
-				<div class="col-lg-3 col-md-6 col-sm-6 mb-r">
-
-					<!-- Collection card -->
-					<div class="card collection-card z-depth-1-half">
-
-						<!-- Card image -->
-						<div class="view hm-zoom">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Vertical/img%20(24).jpg" class="img-fluid" alt="">
-							<div class="stripe light">
-								<a>
-									<p>Tops <i class="fa fa-chevron-right"></i></p>
-								</a>
-							</div>
-						</div>
-						<!-- /.Card image -->
-
-					</div>
-					<!-- /.Collection card -->
-
-				</div>
-				<!-- /.Second column -->
-
-				<!-- Third column -->
-				<div class="col-lg-3 col-md-6 col-sm-6 mb-r">
-
-					<!-- Collection card -->
-					<div class="card collection-card z-depth-1-half">
-
-						<!-- Card image -->
-						<div class="view hm-zoom">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Vertical/img%20(25).jpg" class="img-fluid" alt="">
-							<div class="stripe dark">
-								<a>
-									<p>Jeans <i class="fa fa-chevron-right"></i></p>
-								</a>
-							</div>
-						</div>
-						<!-- /.Card image -->
-
-					</div>
-					<!-- /.Collection card -->
-
-				</div>
-				<!-- /.Third column -->
-
-				<!-- Fourth column -->
-				<div class="col-lg-3 col-md-6 col-sm-6 mb-r">
-
-					<!-- Collection card -->
-					<div class="card collection-card z-depth-1-half">
-
-						<!-- Card image -->
-						<div class="view hm-zoom">
-							<img src="../../../../img/Photos/Horizontal/E-commerce/Vertical/img%20(26).jpg" class="img-fluid" alt="">
-							<div class="stripe light">
-								<a>
-									<p>Jackets <i class="fa fa-chevron-right"></i></p>
-								</a>
-							</div>
-						</div>
-						<!-- /.Card image -->
-
-					</div>
-					<!-- /.Collection card -->
-
-				</div>
-				<!-- /.Fourth column -->
-
-			</div>
-			<!-- /.First row -->
-
-		</section>
-		<!-- /.Section: Products v.4 -->
 
 		<hr class="between-sections">
 
@@ -791,12 +305,7 @@
 		<section class="section">
 
 			<!-- Section heading -->
-			<h1 class="section-heading">Our bestsellers v.5</h1>
-
-			<!-- Section sescription -->
-			<p class="section-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur accusamus veniam. Quia, minima?</p>
-
-
+			<h1 class="section-heading">Alguns Produtos que lhe possam Interessar</h1>
 			<!-- Carousel Wrapper -->
 			<div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
 
@@ -828,7 +337,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(42).jpg" class="img-fluid" alt="">
+									<img src="img/dcp.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -839,16 +348,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Shoes</h5>
-									<h4 class="card-title"><strong><a href="#">Black sneakers</a></strong></h4>
+									<h5>Copo</h5>
+									<h4 class="card-title"><strong><a href="#">Copo para Agua</a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">69$</span>
+										<span class="left">50 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -870,7 +376,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../../mdbootstrap.com_443/img/Photos/Horizontal/E-commerce/Products/img%20(34).jpg" class="img-fluid" alt="">
+									<img src="img/ccp.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -881,16 +387,12 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Jumper</h5>
-									<h4 class="card-title"><strong><a href="#">Black jumper</a></strong></h4>
-
-									<!-- Description -->
-									<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing minima veniam elit. Nam incidunt eius est voluptatibus.
-									</p>
+									<h5>Copo</h5>
+									<h4 class="card-title"><strong><a href="#">Copo para Cerveja</a></strong></h4>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">99$</span>
+										<span class="left">70 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -912,7 +414,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(44).jpg" class="img-fluid" alt="">
+									<img src="img/ecp.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -923,16 +425,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Suits</h5>
-									<h4 class="card-title"><strong><a href="#">Blue suit</a></strong></h4>
+									<h5>Copo</h5>
+									<h4 class="card-title"><strong><a href="#">Copo para Vinho</a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur adipisci sed velit.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">49$</span>
+										<span class="left">50 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -960,7 +459,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(45).jpg" class="img-fluid" alt="">
+									<img src="img/at.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -971,16 +470,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Accessories</h5>
-									<h4 class="card-title"><strong><a href="#">Silver watch</a></strong></h4>
+									<h5>Talhere</h5>
+									<h4 class="card-title"><strong><a href="#">Garfos e Colheres </a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing minima veniam elit. Nam incidunt eius est voluptatibus.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">39$</span>
+										<span class="left">30 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1002,7 +498,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(32).jpg" class="img-fluid" alt="">
+									<img src="img/ct.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -1013,16 +509,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Accesories</h5>
-									<h4 class="card-title"><strong><a href="#">Watch</a></strong></h4>
+									<h5>Talhere</h5>
+									<h4 class="card-title"><strong><a href="#">Colheres e Garfos</a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur adipisci sed velit.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">79$</span>
+										<span class="left">25 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1044,7 +537,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(31).jpg" class="img-fluid" alt="">
+									<img src="img/bt.jpg" class="img-fluid" alt="" width="300px" height="100px">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -1055,16 +548,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Tops</h5>
-									<h4 class="card-title"><strong><a href="#">Pink top</a></strong></h4>
+									<h5>Talheres</h5>
+									<h4 class="card-title"><strong><a href="#">Garfos e Colheres</a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">149$</span>
+										<span class="left">25 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1092,7 +582,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(30).jpg" class="img-fluid" alt="">
+									<img src="img/dm.jpg" class="img-fluid" alt="">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -1103,16 +593,12 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Accessories</h5>
-									<h4 class="card-title"><strong><a href="#">Brown Hat</a></strong></h4>
-
-									<!-- Description -->
-									<p class="card-text">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur adipisci sed velit.
-									</p>
+									<h5>Mesa</h5>
+									<h4 class="card-title"><strong><a href="#">Mesa Redonda</a></strong></h4>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">29$</span>
+										<span class="left">290 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1134,7 +620,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(23).jpg" class="img-fluid" alt="">
+									<img src="img/fm.jpg" class="img-fluid" alt="">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -1145,16 +631,13 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Shoes</h5>
-									<h4 class="card-title"><strong><a href="#">Sport shoes</a></strong></h4>
+									<h5>Mesa</h5>
+									<h4 class="card-title"><strong><a href="#">Mesa Rentangular</a></strong></h4>
 
-									<!-- Description -->
-									<p class="card-text">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates.
-									</p>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">89$</span>
+										<span class="left">350 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1176,7 +659,7 @@
 
 								<!-- Card image -->
 								<div class="view overlay hm-white-slight">
-									<img src="../../../../img/Photos/Horizontal/E-commerce/Products/img%20(15).jpg" class="img-fluid" alt="">
+									<img src="img/bm.jpg" class="img-fluid" alt="">
 									<a>
 										<div class="mask waves-light"></div>
 									</a>
@@ -1187,16 +670,12 @@
 								<div class="card-block text-center">
 
 									<!-- Category & Title -->
-									<h5>Shoes</h5>
-									<h4 class="card-title"><strong><a href="#">Converse sneakers</a></strong></h4>
-
-									<!-- Description -->
-									<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing minima veniam elit. Nam incidunt eius est voluptatibus.
-									</p>
+									<h5>Mesa</h5>
+									<h4 class="card-title"><strong><a href="#">Mesa Redonda</a></strong></h4>
 
 									<!-- Card footer -->
 									<div class="card-footer">
-										<span class="left">129$</span>
+										<span class="left">290 MT</span>
 										<span class="right">
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Quick Look"><i class="fa fa-eye"></i></a>
                                                 <a class="" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><i class="fa fa-heart"></i></a>
@@ -1229,171 +708,8 @@
 </main>
 <!-- /.Main layout -->
 
-
-<!-- Footer -->
-<footer class="page-footer center-on-small-only">
-
-	<!-- Footer Links -->
-	<div class="container-fluid">
-
-		<div class="row">
-
-			<!-- First column -->
-			<div class="col-lg-2 offset-lg-1">
-				<h5 class="title social-section-title">Social Media</h5>
-
-				<!-- Social Links -->
-				<div class="social-section text-md-left">
-					<ul class="text-center">
-
-						<!-- Facebook -->
-						<li><a class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"></i></a></li>
-
-						<!-- Instagram -->
-						<li><a class="btn-floating btn-small btn-ins"><i class="fa fa-instagram"></i></a></li>
-
-						<!-- Twitter -->
-						<li><a class="btn-floating btn-small btn-tw"><i class="fa fa-twitter"></i></a></li>
-
-						<!--Youtube-->
-						<li><a class="btn-floating btn-small btn-yt"><i class="fa fa-youtube"></i></a></li>
-
-						<!--Linkedin-->
-						<li><a class="btn-floating btn-small btn-li"><i class="fa fa-linkedin"></i></a></li>
-
-						<!-- Dribble -->
-						<li><a class="btn-floating btn-small btn-dribbble"><i class="fa fa-dribbble left"></i></a></li>
-
-						<!-- Pinterest -->
-						<li><a class="btn-floating btn-small btn-pin"><i class="fa fa-pinterest"></i></a></li>
-
-						<!-- Google+ -->
-						<li><a class="btn-floating btn-small btn-gplus"><i class="fa fa-google-plus"></i></a></li>
-					</ul>
-
-				</div>
-				<!-- /.Social Links -->
-
-			</div>
-			<!-- /.First column -->
-
-			<!-- Second column -->
-			<div class="col-lg-2">
-				<h5 class="title">Delivery</h5>
-				<ul>
-					<li><a href="#">Store Delivery</a></li>
-					<li><a href="#">Online Delivery</a></li>
-					<li><a href="#">Delivery Terms & Conditions</a></li>
-					<li><a href="#">Tracking</a></li>
-				</ul>
-			</div>
-			<!-- /.Second column -->
-
-			<!-- Third column -->
-			<div class="col-lg-2">
-				<h5 class="title">Need help?</h5>
-				<ul>
-					<li><a href="#">FAQ</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Return Policy</a></li>
-					<li><a href="#">Product Registration</a></li>
-				</ul>
-			</div>
-			<!-- /.Third column -->
-
-			<!-- Fourth column -->
-			<div class="col-lg-4">
-				<h5 class="title">Instagram Photos</h5>
-
-				<ul class="instagram-photos">
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(9).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(20).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(19).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(16).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(5).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(18).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(15).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-					<li>
-						<div class="view overlay hm-white-slight">
-							<img class="img-fluid" src="../../../../img/Photos/Avatars/img%20(17).jpg" alt="Instagram photo cap">
-							<a href="#">
-								<div class="mask waves-light"></div>
-							</a>
-						</div>
-					</li>
-				</ul>
-
-			</div>
-			<!-- /.Fourth column -->
-
-		</div>
-
-	</div>
-	<!-- /.Footer Links -->
-
-	<!-- Copyright -->
-	<div class="footer-copyright">
-		<div class="container-fluid">
-			&copy; 2016 Copyright: <a href="http://www.mdbootstrap.com/"> MDBootstrap.com </a>
-		</div>
-	</div>
-	<!-- /.Copyright -->
-
-</footer>
-<!-- /.Footer -->
-
 <!-- Cart Modal -->
-<div class="modal fade cart-modal" id="cart-modal-ex" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade cart-modal" id="cart-modal-ex" href="" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 
 	<div class="modal-dialog" role="document">
 
@@ -1405,7 +721,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Your cart</h4>
+				<h4 class="modal-title" id="myModalLabel">Seus Items</h4>
 			</div>
 
 			<!-- Body -->
@@ -1414,52 +730,47 @@
 				<table class="table table-hover">
 					<thead>
 					<tr>
-						<th>#</th>
-						<th>Product name</th>
-						<th>Price</th>
-						<th>Remove</th>
+						<th>Producto</th>
+						<th>Qtd</th>
+						<th>Preço</th>
+						<th>Remover</th>
 					</tr>
 					</thead>
+
 					<tbody>
+					@if(Session::has('carinho'))
+
+						@foreach($carinho->items as $m)
 					<tr>
-						<th scope="row">1</th>
-						<td>Product 1</td>
-						<td>100$</td>
+						<td>{{$m['item']->tipo->designacao}}</td>
+						<td>{{$m['quantidade']}}</td>
+						<td>{{$m['preco']}} MT</td>
 						<td><a><i class="fa fa-remove"></i></a></td>
 					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>Product 2</td>
-						<td>100$</td>
-						<td><a><i class="fa fa-remove"></i></a></td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>Product 3</td>
-						<td>100$</td>
-						<td><a><i class="fa fa-remove"></i></a></td>
-					</tr>
-					<tr>
-						<th scope="row">4</th>
-						<td>Product 4</td>
-						<td>100$</td>
-						<td><a><i class="fa fa-remove"></i></a></td>
-					</tr>
-					<tr class="total">
-						<th scope="row">5</th>
-						<td>Total</td>
-						<td>400$</td>
-					</tr>
+
+						@endforeach
+					@endif
 					</tbody>
 				</table>
+					<hr>
+				<span class="clearfix text-center"><strong>Preço Total: {{$total}} .00 MT</strong></span>
+				<hr class="clearfix">
+				@if (Auth::guest())
+					<li>
+						<a href="{{ url('/login') }}" class="clearfix btn btn-primary" >Conferir</a>
+					</li>
+				@else
+					<li>
+						<a href="{{ url('reservar') }}" class="clearfix btn btn-primary" >Reservar</a>
+					</li>
 
-				<button class="btn btn-primary">Checkout</button>
+					@endif
 
 			</div>
 
 			<!-- Footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 			</div>
 		</div>
 		<!-- /.Content -->
@@ -1505,7 +816,7 @@
 	})
 </script>
 
-</body class="hidden-sn pink-skin animated">
+</body>
 
 
 <!-- Mirrored from mdbootstrap.com/live/_MDB/templates/Ecommerce/home-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 25 May 2017 12:36:26 GMT -->
