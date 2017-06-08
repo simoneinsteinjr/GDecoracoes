@@ -37,13 +37,6 @@
                     <td>{{ $m->quantidade }} Units </td>
                     <td>{{ $m->preco }} MT </td>
                     <td><a href="{{route('materiais.edit',$m->id)}}" class="btn btn-warning btn-md">Alterar</a></td>
-                    {{--<td><a href="{{route('mesas.destroy',$mesa->id)}}" class="btn btn-danger btn-sm">Apagar</a></td>--}}
-
-                    {{--<td>--}}
-                        {{--{!! Form::open(['method' => 'EDIT', 'route'=>['mesas.edit', $mesa->id]]) !!}--}}
-                        {{--{!! Form::submit('Alterar', ['class' => 'btn btn-warning btn-sm']) !!}--}}
-                        {{--{!! Form::close() !!}--}}
-                    {{--</td>--}}
 
                     <td>
                         {!! Form::open(['method' => 'DELETE', 'route'=>['materiais.destroy', $m->id]]) !!}

@@ -730,9 +730,10 @@
 				<table class="table table-hover">
 					<thead>
 					<tr>
-						<th>Producto</th>
+						<th>Titulo</th>
 						<th>Qtd</th>
 						<th>Preço</th>
+						<th>Total</th>
 						<th>Remover</th>
 					</tr>
 					</thead>
@@ -741,19 +742,18 @@
 					@if(Session::has('carinho'))
 
 						@foreach($carinho->items as $m)
-					<tr>
-						<td>{{$m['item']->tipo->designacao}}</td>
-						<td>{{$m['quantidade']}}</td>
-						<td>{{$m['preco']}} MT</td>
-						<td><a><i class="fa fa-remove"></i></a></td>
-					</tr>
+							<tr>
+								<td>{{$m['item']->tipo->designacao}}</td>
+								<td>{{$m['quantidade']}}</td>
+								<td>{{$m['item']->preco}} MT</td>
+								<td>{{$m['preco']}} MT</td>
+								<td><a><i class="fa fa-remove"></i></a></td>
+							</tr>
 
 						@endforeach
 					@endif
 					</tbody>
 				</table>
-					<hr>
-				<span class="clearfix text-center"><strong>Preço Total: {{$total}} .00 MT</strong></span>
 				<hr class="clearfix">
 				@if (Auth::guest())
 					<li>

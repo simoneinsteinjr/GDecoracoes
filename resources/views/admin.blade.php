@@ -64,10 +64,10 @@
                         </ul>
                     </div>
                 </li>
-                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i>Reservas<i class="fa fa-angle-down rotate-icon"></i></a>
+                <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-book"></i>Pedidos<i class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="#" class="waves-effect">Introduction</a>
+                            <li><a href="reservas" class="waves-effect">Reservas</a>
                             </li>
                             <li><a href="#" class="waves-effect">Monthly meetings</a>
                             </li>
@@ -125,33 +125,6 @@
     </div>
 </main>
 <!--/Main layout-->
-
-<!--Footer-->
-{{--<footer class="page-footer center-on-small-only">--}}
-    {{--<!--Social buttons-->--}}
-    {{--<div class="social-section">--}}
-        {{--<ul>--}}
-            {{--<li><a class="btn-floating btn-small btn-fb"><i class="fa fa-facebook"> </i></a></li>--}}
-            {{--<li><a class="btn-floating btn-small btn-tw"><i class="fa fa-twitter"> </i></a></li>--}}
-            {{--<li><a class="btn-floating btn-small btn-gplus"><i class="fa fa-google-plus"> </i></a></li>--}}
-            {{--<li><a class="btn-floating btn-small btn-li"><i class="fa fa-linkedin"> </i></a></li>--}}
-        {{--</ul>--}}
-    {{--</div>--}}
-    {{--<!--/.Social buttons-->--}}
-
-    {{--<!--Copyright-->--}}
-    {{--<div class="footer-copyright">--}}
-        {{--<div class="container-fluid">--}}
-            {{--© 2017 - Todos os direitos reservados: <a href="#"></a>--}}
-
-        {{--</div>--}}
-    {{--</div>--}}
-    {{--<!--/.Copyright-->--}}
-
-{{--</footer>--}}
-{{--<!--/.Footer-->--}}
-
-
 
 <!-- SCRIPTS -->
 <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled.min.js"></script>

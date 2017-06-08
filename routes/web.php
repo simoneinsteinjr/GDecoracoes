@@ -11,20 +11,17 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
 
 Route::get('admin', function () {
     return view('admin');
 });
 
-
 Route::get('/', 'FrontController@index');
 
 Route::get('adicionar-ao-carinho/{id}', 'FrontController@adicionarAoCarinho');
 
-Route::get('reservar', 'ReservaController@store');
+Route::get('reservar', 'ReservaController@create');
+Route::resource('reservas', 'ReservaController');
 
 Route::get('material', 'MaterialController@create');
 Route::resource('materiais', 'MaterialController');
