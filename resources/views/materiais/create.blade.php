@@ -3,6 +3,7 @@
 @section('content')
 
     {!! Form::open(['url' => 'materiais', 'files'=>true]) !!}
+    {{csrf_field()}}
 
     <div class="text-center">
         <h5><i class="fa fa-pencil"></i> Registo de Material:</h5>

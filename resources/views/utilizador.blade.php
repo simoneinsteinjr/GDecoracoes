@@ -105,6 +105,11 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
 
+<script>
+    // Data Picker Initialization
+    $('.datepicker').pickadate();
+</script>
+
 <!-- Customizer -->
 <script type="text/javascript" src="js/customizer.min.js"></script>
 

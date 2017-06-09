@@ -69,17 +69,13 @@
                         <ul>
                             <li><a href="reservas" class="waves-effect">Reservas</a>
                             </li>
-                            <li><a href="#" class="waves-effect">Monthly meetings</a>
-                            </li>
                         </ul>
                     </div>
                 </li>
                 <li><a class="collapsible-header waves-effect arrow-r"><i class="fa fa-bar-chart-o"></i>Estatisticas<i class="fa fa-angle-down rotate-icon"></i></a>
                     <div class="collapsible-body">
                         <ul>
-                            <li><a href="#" class="waves-effect">FAQ</a>
-                            </li>
-                            <li><a href="#" class="waves-effect">Write a message</a>
+                            <li><a href="estatisticas" class="waves-effect">Graficos</a>
                             </li>
                         </ul>
                     </div>
@@ -129,6 +125,9 @@
 <!-- SCRIPTS -->
 <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/compiled.min.js"></script>
 
+{{--<script src="{{url('js/chartjs/chart.min.js')}}"></script>--}}
+{{--<script src="{{url('js/chartjs/chart-script.js')}}"></script>--}}
+
 <script>
     $(".button-collapse").sideNav();
 
@@ -147,6 +146,8 @@
     $('#txtpesquisar').quicksearch('#tabela tbody tr');
 
 </script>
+
+@yield('js')
 
 </body>
 

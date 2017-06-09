@@ -16,9 +16,11 @@ class CreateTableReservas extends Migration
         Schema::create('reservas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('quantidade');
+            $table->double('preco');
             $table->double('precoTotal');
             $table->date('dataFim');
             $table->string('estado');
+            $table->string('descricao');
 
             $table->integer('material_id')->unsigned();
             $table->foreign('material_id')->references('id')->on('material')
