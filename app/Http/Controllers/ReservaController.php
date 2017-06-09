@@ -9,12 +9,13 @@ use Session;
 use App\Carinho;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservaController extends Controller
 {
     public function index()
     {
-        $reserva = Reserva::all();
+        $reserva = Reserva::all()->where('estado', '=', 'PENDENTE');
 
         if(!Session::has('carinho')){
             $carinho = null;
@@ -38,7 +39,7 @@ class ReservaController extends Controller
 
     public function store(ReservaRequest $rq)
     {
-        $est='Pendente';
+        $est='PENDENTE';
 
         if(!Session::has('carinho')){
             $carinho = null;
@@ -48,32 +49,22 @@ class ReservaController extends Controller
 
         $m_id = $rq->material_id;
         $qtd = $rq->quantidade;
-//        $precoP = $rq->precoTotal;
+        $prc = $rq->preco;
 
         foreach ($m_id as $index=>$value){
             foreach ($qtd as $qtdP=>$value)
+                foreach ($prc as $prcP=>$value)
 
             $reserva = new Reserva();
-            $reserva->user_id=Auth::user()->id;
             $reserva->quantidade=$qtd[$qtdP];
-            $reserva->precoTotal=$carinho->precoTotal;
+            $reserva->preco=$prc[$prcP];
             $reserva->dataFim=$rq->dataFim;
             $reserva->estado=$est;
+            $reserva->descricao=$rq->descricao;
             $reserva->material_id=$m_id[$index];
-            $reserva->save();
+            $reserva->user_id=Auth::user()->id;
         }
-
-//        $reserva = new Reserva(array (
-//            "user_id"=>$user->id,
-//            "material_id"=>$rq->material_id,
-//            "quantidade" =>$carinho->quantidadeTotal,
-//            "precoTotal"=>("$carinho->precoTotal"),
-////            "dataInicio" =>$rq->get("dataInicio"),
-//            "dataFim"=>$rq->get("dataFim"),
-//            "estado"=>$est
-//        ));
-//
-//        $reserva->save();
+        $reserva->save();
         session()->flash('flash_message', 'Enviado Com Sucesso');
         return redirect('/');
     }
@@ -86,13 +77,7 @@ class ReservaController extends Controller
 
     public function update(ReservaRequest $rq, $id)
     {
-        $reserva2= array (
-            "quantidade" =>$rq->get("quantidade"),
-            "preco"=>$rq->get("preco"),
-            "precoTotal"=>$rq->get("precoTotal"),
-            "dataInicio"=>$rq->get("dataInicio"),
-            "dataFim"=>$rq->get("dataFim"),
-        );
+        $reserva2 = Reserva::all();
         $reserva = Reserva::find($id);
         $reserva->update($reserva2);
         session()->flash('flash_message', 'Actualizado Com Sucesso');
@@ -102,9 +87,42 @@ class ReservaController extends Controller
     public function destroy($id)
     {
         $reserva = Reserva::find($id);
-        $reserva->estado='Diferido';
+        $reserva->estado='CONFIRMADO';
         $reserva->update();
         session()->flash('flash_message', 'Removido Com Sucesso');
-        return redirect('indexAdmin');
+        return redirect('admin');
     }
+
+    public function grafico(){
+
+        $jan = 87;
+        $jan_confirmados = 50;
+
+        $reservaP=DB::table('reservas')->where('estado', 'PENDENTE')->get();
+        $reservaC=DB::table('reservas')->where('estado', 'CONFIRMADO')->get();
+        $reservasP = count($reservaP);
+        $reservasC = count($reservaC);
+
+        return response()->json([
+          'reservaP' =>  $reservasP,
+            'textoP' => 'Pendentes',
+            'textoC' => 'Confirmados',
+            'reservaC' => $reservasC
+        ]);
+
+//        return response()->json([
+//            'jan' => $jan,
+//            'jan_confirmados' =>$jan_confirmados
+//        ]);
+    }
+
+
+//    public function cancelarPedido(ReservaRequest $rq, $id)
+//    {
+//        $reserva = Reserva::find($id);
+//        $reserva->estado = 'CANCELADO';
+//
+//        $reserva->save();
+//        return redirect('indexAdmin');
+//    }
 }

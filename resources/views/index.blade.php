@@ -137,7 +137,7 @@
 
 								<!-- Mask color -->
 								<div class="view hm-black-light">
-									<img src="/img/slides/a.jpg" class="img-fluid" alt="">
+									<img src="/img/slides/xm.png" class="img-fluid" alt="">
 									<div class="full-bg-img">
 									</div>
 								</div>
@@ -159,7 +159,7 @@
 
 								<!-- Mask color -->
 								<div class="view hm-black-light">
-									<img src="/img/slides/a.jpg" class="img-fluid img-responsive+" alt="">
+									<img src="/img/slides/xm.png" class="img-fluid img-responsive+" alt="">
 									<div class="full-bg-img">
 									</div>
 								</div>
@@ -181,7 +181,7 @@
 
 								<!-- Mask color -->
 								<div class="view hm-black-light">
-									<img src="/img/slides/a.jpg" class="img-fluid img-responsive" alt="">
+									<img src="/img/slides/xm.png" class="img-fluid img-responsive" alt="">
 									<div class="full-bg-img">
 									</div>
 								</div>
@@ -795,6 +795,11 @@
 
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="js/mdb.min.js"></script>
+
+<script>
+	// Data Picker Initialization
+	$('.datepicker').pickadate();
+</script>
 
 <!-- Customizer -->
 <script type="text/javascript" src="js/customizer.min.js"></script>

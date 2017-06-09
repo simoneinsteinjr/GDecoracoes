@@ -11,14 +11,18 @@ class Reserva extends Model
         'user_id',
         'material_id',
         'quantidade',
-        'precoTotal',
-//        'dataInicio',
+        'preco',
         'dataFim',
+        'descricao',
         'estado'
     ];
 
-    public function Reserva(){
-        return $this->hasMany('App\Material');
+    public function Material(){
+        return $this->belongsTo('App\Material');
+    }
+
+    public function User(){
+        return $this->belongsTo('App\User');
     }
 
     protected $table = 'reservas';

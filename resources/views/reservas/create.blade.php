@@ -60,19 +60,13 @@
                 {!! Form::textarea('descricao', null, ['class'=>'md-textarea', 'placeholder'=>'Introduza a descricao do material']) !!}
             </div>
 
-            {{--<div class="text-right">--}}
-                {{--<a href="reservas">--}}
-                    {{--<button type="button" class="btn btn-success btn-lg">Submeter</button>--}}
-                {{--</a>--}}
-            {{--</div>--}}
             @if(Session::has('carinho'))
                 @foreach($carinho->items as $m)
             <input type="hidden" name="material_id[]" value="{{$m['item']->id}}">
             <input type="hidden" name="quantidade[]" value="{{$m['quantidade']}}">
-            {{--<input type="hidden" name="precoTotal[]" value="{{$m['preco']}}">--}}
+            <input type="hidden" name="preco[]" value="{{$m['preco']}}">
             @endforeach
             @endif
-            {{--{!! Form::hidden('material_id',) !!}--}}
 
             <div class="text-right">
                     {!! Form::submit('SUBMETERR', ['class' => 'btn btn-success btn-md']) !!}

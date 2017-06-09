@@ -16,6 +16,10 @@ Route::get('admin', function () {
     return view('admin');
 });
 
+Route::get('estatisticas', function () {
+    return view('graficos');
+});
+
 Route::get('/', 'FrontController@index');
 
 Route::get('adicionar-ao-carinho/{id}', 'FrontController@adicionarAoCarinho');
@@ -29,6 +33,8 @@ Route::resource('materiais', 'MaterialController');
 Route::get('tipo', 'TipoController@create');
 Route::resource('tipos', 'TipoController');
 
+Route::get('grafico', 'ReservaController@grafico');
+Route::get('confirmar/{id}', 'ReservaController@confirmarReserva');
 
 Auth::routes();
 

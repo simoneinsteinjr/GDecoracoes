@@ -19,5 +19,9 @@ class Material extends Model
         return $this->belongsTo('App\Tipo');
     }
 
+    public function Reserva(){
+        return $this->hasMany('App\Reserva');
+    }
+
     protected $table = 'material';
 }
